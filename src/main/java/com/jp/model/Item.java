@@ -8,7 +8,7 @@ public class Item {
     private final Optional<String> description;
     private final Optional<Integer> location;
 
-    public Item(Integer itemId, String itemName, Optiaonal<String> description, Optional<Integer> location) {
+    public Item(Integer itemId, String itemName, Optional<String> description, Optional<Integer> location) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.description = description;
@@ -23,11 +23,11 @@ public class Item {
         return itemName;
     }
 
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return description;
     }
 
-    public Integer getLocation() {
+    public Optional<Integer> getLocation() {
         return location;
     }
 }
