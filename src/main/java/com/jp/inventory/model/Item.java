@@ -2,11 +2,22 @@ package com.jp.inventory.model;
 
 import java.util.Optional;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Item")
 public class Item {
-    private final Integer itemId; // unico, obligatorio
-    private final String itemName; // obligatorio
-    private final Optional<String> description;
-    private final Optional<Location> location;
+
+    @Id
+    private Integer itemId; // unico, obligatorio
+    private String itemName; // obligatorio
+    private Optional<String> description;
+    private Optional<Location> location;
+
+    protected Item() {
+    }
 
     public Item(Integer itemId, String itemName, Optional<String> description, Optional<Location> location) {
         this.itemId = itemId;

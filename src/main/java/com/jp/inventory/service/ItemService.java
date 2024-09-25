@@ -1,5 +1,6 @@
 package com.jp.inventory.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +11,10 @@ import com.jp.inventory.model.Item;
 
 @Service
 public class ItemService {
+
     private ItemDao itemDao;
 
+    @Autowired
     public ItemService(ItemDao itemDao) {
         this.itemDao = itemDao;
     }
