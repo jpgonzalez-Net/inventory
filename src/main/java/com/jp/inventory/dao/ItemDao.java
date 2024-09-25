@@ -12,6 +12,7 @@ public interface ItemDao {
 
     int removeItem(Integer itemId);
 
-    int insertItem(Integer itemId, Item item);
+    Optional<Item> insertItem(Integer itemId, Item item);
 
+    boolean validateId(Integer itemId);
 }

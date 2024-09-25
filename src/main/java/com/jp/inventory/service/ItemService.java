@@ -33,7 +33,14 @@ public class ItemService {
         return -1;
     }
 
-    public int insertItem(Integer itemId, Item item) {
+    public Optional<Item> insertItem(Integer itemId, Item item) {
+        if (itemId == null || item.getItemName() == null || !this.validateId(itemId)) {
+            return Optional.of(null);
+        }
         return itemDao.insertItem(itemId, item);
+    }
+
+    public boolean validateId(Integer itemId) {
+        return itemDao.validateId(itemId);
     }
 }

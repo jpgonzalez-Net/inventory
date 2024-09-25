@@ -37,8 +37,14 @@ public class FakeItemDao implements ItemDao {
     }
 
     @Override
-    public int insertItem(Integer itemId, Item item) {
+    public Optional<Item> insertItem(Integer itemId, Item item) {
         database.put(itemId, item);
-        return 1;
+        return Optional.ofNullable(database.get(itemId));
+    }
+
+    @Override
+    public boolean validateId(Integer itemId) {
+        Item item = database.get(itemId);
+        return item == null;
     }
 }
