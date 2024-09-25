@@ -37,10 +37,20 @@ public class ItemService {
         if (itemId == null || item.getItemName() == null || !this.validateId(itemId)) {
             return Optional.of(null);
         }
+        if (item.getLocation().isPresent()) {
+            if (item.getLocation().get().getLocationId() == null || item.getLocation().get().getLocationId() == null) {
+                return Optional.of(null);
+            }
+        }
+
         return itemDao.insertItem(itemId, item);
     }
 
     public boolean validateId(Integer itemId) {
         return itemDao.validateId(itemId);
+    }
+
+    public boolean validateLocationId(Integer locationId) {
+        return itemDao.validateLocationId(locationId);
     }
 }

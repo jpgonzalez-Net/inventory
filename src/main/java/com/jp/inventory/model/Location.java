@@ -8,11 +8,11 @@ public class Location {
     private final Optional<String> address;
     private final Optional<Integer> phoneNumber;
 
-    public Location(Integer locationId, String state, String address, Integer phoneNumber) {
+    public Location(Integer locationId, String state, Optional<String> address, Optional<Integer> phoneNumber) {
         this.locationId = locationId;
         this.state = state;
-        this.address = Optional.of(address);
-        this.phoneNumber = Optional.of(phoneNumber);
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 
     public Integer getLocationId() {
