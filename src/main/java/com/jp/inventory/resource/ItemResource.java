@@ -1,4 +1,4 @@
-package com.jp.resource;
+package com.jp.inventory.resource;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,8 +8,8 @@ import java.util.Optional;
 
 import javax.ws.rs.core.MediaType;
 
-import com.jp.model.Item;
-import com.jp.service.ItemService;
+import com.jp.inventory.model.Item;
+import com.jp.inventory.service.ItemService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +28,11 @@ public class ItemResource {
 
     // GET /items
     @GetMapping(produces = MediaType.APPLICATION_JSON)
-    public List<Item> fetchItems(@RequestParam String param) {
+    public List<Item> fetchItems() {
         return itemService.getAllItems();
     }
 
-    // GET /items/itemId
+    // GET /items/{itemId}
     @GetMapping(path = "{itemId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<?> fetchItem(@PathVariable Integer itemId) {
         Optional<Item> itemOptional = itemService.getItem(itemId);

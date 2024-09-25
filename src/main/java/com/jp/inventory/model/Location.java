@@ -1,4 +1,4 @@
-package com.jp.model;
+package com.jp.inventory.model;
 
 import java.util.Optional;
 

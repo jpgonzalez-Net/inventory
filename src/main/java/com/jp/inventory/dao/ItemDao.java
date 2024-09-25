@@ -1,9 +1,9 @@
-package com.jp.dao;
+package com.jp.inventory.dao;
 
 import java.util.Optional;
 import java.util.List;
 
-import com.jp.model.Item;
+import com.jp.inventory.model.Item;
 
 public interface ItemDao {
     List<Item> getAllItems();
@@ -12,6 +12,6 @@ public interface ItemDao {
 
     int removeItem(Integer itemId);
 
-    int insertItem(Item item);
+    int insertItem(Integer itemId, Item item);
 
 }

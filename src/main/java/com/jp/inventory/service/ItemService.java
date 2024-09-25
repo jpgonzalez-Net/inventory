@@ -1,12 +1,12 @@
-package com.jp.service;
+package com.jp.inventory.service;
 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.jp.dao.ItemDao;
-import com.jp.model.Item;
+import com.jp.inventory.dao.ItemDao;
+import com.jp.inventory.model.Item;
 
 @Service
 public class ItemService {
@@ -33,7 +33,7 @@ public class ItemService {
         return -1;
     }
 
-    public int insertItem(Item item) {
-        return itemDao.insertItem(item);
+    public int insertItem(Integer itemId, Item item) {
+        return itemDao.insertItem(itemId, item);
     }
 }
