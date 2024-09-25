@@ -15,4 +15,6 @@ public interface ItemDao {
     Optional<Item> insertItem(Integer itemId, Item item);
 
     boolean validateId(Integer itemId);
+
+    boolean validateLocationId(Integer locationId);
 }

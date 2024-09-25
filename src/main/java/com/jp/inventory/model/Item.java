@@ -6,9 +6,9 @@ public class Item {
     private final Integer itemId; // unico, obligatorio
     private final String itemName; // obligatorio
     private final Optional<String> description;
-    private final Optional<Integer> location;
+    private final Optional<Location> location;
 
-    public Item(Integer itemId, String itemName, Optional<String> description, Optional<Integer> location) {
+    public Item(Integer itemId, String itemName, Optional<String> description, Optional<Location> location) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.description = description;
@@ -27,7 +27,7 @@ public class Item {
         return description;
     }
 
-    public Optional<Integer> getLocation() {
+    public Optional<Location> getLocation() {
         return location;
     }
 }

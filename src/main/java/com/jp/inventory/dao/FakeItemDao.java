@@ -47,4 +47,10 @@ public class FakeItemDao implements ItemDao {
         Item item = database.get(itemId);
         return item == null;
     }
+
+    @Override
+    public boolean validateLocationId(Integer locationId) {
+        // TODO Auto-generated method stub
+        return true;
+    }
 }

@@ -31,6 +31,7 @@ public class ItemResource {
     // GET /items
     @GetMapping(produces = MediaType.APPLICATION_JSON)
     public List<Item> fetchItems() {
+        // TODO: implement queries
         return itemService.getAllItems();
     }
 
@@ -64,6 +65,7 @@ public class ItemResource {
         // 200 - OK
         Optional<Item> itemOptional = itemService.insertItem(item.getItemId(), item);
         if (itemOptional.isPresent()) {
+            // TODO: check that Location is valid
             return ResponseEntity.ok(itemOptional.get());
         }
 
@@ -74,8 +76,16 @@ public class ItemResource {
     // DELETE /items
     @DeleteMapping(path = "{itemId}")
     public ResponseEntity<?> deleteItem(@PathVariable Integer itemId) {
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-                .body(new ErrorMessage("DELETE method not implemented"));
+        // Check if itemId exists
+        if (!itemService.validateId(itemId)) {
+            itemService.removeItem(itemId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("item " + itemId + " was deleted from database");
+        }
+
+        // if not exist
+        // 404 - Not Found
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorMessage("item " + itemId + " was not found"));
     }
 
     class ErrorMessage {
