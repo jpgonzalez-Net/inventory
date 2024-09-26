@@ -25,20 +25,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ItemResource {
 
     @Autowired
-    private ItemService itemService;
+    ItemService itemService;
 
-    // public ItemResource() {
-
+    // public ItemResource(ItemService itemService) {
+    // this.itemService = itemService;
     // }
-
-    public ItemResource(ItemService itemService) {
-        this.itemService = itemService;
-    }
 
     // GET /items
     @GetMapping(produces = MediaType.APPLICATION_JSON)
     public List<Item> fetchItems() {
-        System.out.println("null");
         // TODO: implement queries
         return itemService.getAllItems();
     }
@@ -58,7 +53,7 @@ public class ItemResource {
     public ResponseEntity<?> insterNewItem(@RequestBody Item item) {
         // check if item is valid (id, name)
         // 400 - bad request
-        if (item.getItemId() == null || item.getItemName() == null) {
+        if (item.getItemName() == null) {
             // check if has location and the location is valid
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid item"));
         }
@@ -83,7 +78,8 @@ public class ItemResource {
         // check if locationId is already in dadtabase
         // 409 - Conflict
         // if (item.getLocation().isPresent()
-        // && !itemService.validateLocationId(item.getLocation().get().getLocationId()))
+        // &&
+        // !itemService.validateLocationId(item.getLocation().get().getLocationId()))
         // {
         // return ResponseEntity.status(HttpStatus.CONFLICT)
         // .body(new ErrorMessage(
@@ -92,11 +88,11 @@ public class ItemResource {
         // }
 
         // item is present and avalid
-        // 200 - OK
-        Optional<Item> itemOptional = itemService.insertItem(item.getItemId(), item);
+        // 201 - OK
+        Optional<Item> itemOptional = itemService.insertItem(item);
         if (itemOptional.isPresent()) {
             // TODO: check that Location is valid
-            return ResponseEntity.ok(itemOptional.get());
+            return ResponseEntity.status(HttpStatus.CREATED).body(itemOptional.get());
         }
 
         // item is not valid

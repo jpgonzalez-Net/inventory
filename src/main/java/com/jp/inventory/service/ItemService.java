@@ -3,6 +3,7 @@ package com.jp.inventory.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ import com.jp.inventory.repository.ItemRepo;
 public class ItemService {
 
     @Autowired
-    private ItemRepo itemDao;
+    ItemRepo itemDao;
 
     public List<Item> getAllItems() {
         List<Item> items = itemDao.findAll();
@@ -31,8 +32,8 @@ public class ItemService {
         }
     }
 
-    public Optional<Item> insertItem(Integer itemId, Item item) {
-        if (itemId == null || item.getItemName() == null || !this.validateId(itemId)) {
+    public Optional<Item> insertItem(Item item) {
+        if (item.getItemId() == null || item.getItemName() == null || !this.validateId(item.getItemId())) {
             return Optional.of(null);
         }
         // if (item.getLocation().isPresent()) {
