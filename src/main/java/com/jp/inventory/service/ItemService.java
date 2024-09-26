@@ -6,54 +6,52 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import com.jp.inventory.dao.ItemDao;
 import com.jp.inventory.model.Item;
+import com.jp.inventory.repository.ItemRepo;
 
 @Service
 public class ItemService {
 
-    private ItemDao itemDao;
-
     @Autowired
-    public ItemService(ItemDao itemDao) {
-        this.itemDao = itemDao;
-    }
+    private ItemRepo itemDao;
 
     public List<Item> getAllItems() {
-        List<Item> items = itemDao.getAllItems();
+        List<Item> items = itemDao.findAll();
         return items;
     }
 
     public Optional<Item> getItem(Integer itemId) {
-        return itemDao.getItem(itemId);
+        return itemDao.findById(itemId);
     }
 
-    public int removeItem(Integer itemId) {
+    public void removeItem(Integer itemId) {
         Optional<Item> itemOptional = getItem(itemId);
         if (itemOptional.isPresent()) {
-            return itemDao.removeItem(itemId);
+            itemDao.deleteById(itemId);
         }
-        return -1;
     }
 
     public Optional<Item> insertItem(Integer itemId, Item item) {
         if (itemId == null || item.getItemName() == null || !this.validateId(itemId)) {
             return Optional.of(null);
         }
-        if (item.getLocation().isPresent()) {
-            if (item.getLocation().get().getLocationId() == null || item.getLocation().get().getLocationId() == null) {
-                return Optional.of(null);
-            }
-        }
+        // if (item.getLocation().isPresent()) {
+        // if (item.getLocation().get().getLocationId() == null ||
+        // item.getLocation().get().getLocationId() == null) {
+        // return Optional.of(null);
+        // }
+        // }
 
-        return itemDao.insertItem(itemId, item);
+        itemDao.save(item);
+        return Optional.of(item);
     }
 
     public boolean validateId(Integer itemId) {
-        return itemDao.validateId(itemId);
+        return !itemDao.existsById(itemId);
     }
 
     public boolean validateLocationId(Integer locationId) {
-        return itemDao.validateLocationId(locationId);
+        return true;
+        // return itemDao.validateLocationId(locationId);
     }
 }

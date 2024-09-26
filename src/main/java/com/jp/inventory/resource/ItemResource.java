@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
 import com.jp.inventory.model.Item;
 import com.jp.inventory.service.ItemService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +23,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping(path = "/items")
 public class ItemResource {
+
+    @Autowired
     private ItemService itemService;
+
+    // public ItemResource() {
+
+    // }
 
     public ItemResource(ItemService itemService) {
         this.itemService = itemService;
@@ -31,6 +38,7 @@ public class ItemResource {
     // GET /items
     @GetMapping(produces = MediaType.APPLICATION_JSON)
     public List<Item> fetchItems() {
+        System.out.println("null");
         // TODO: implement queries
         return itemService.getAllItems();
     }
@@ -57,11 +65,13 @@ public class ItemResource {
 
         // item is valid, check if has location and is valid
         // 400 - bad request
-        if (item.getLocation().isPresent()) {
-            if (item.getLocation().get().getLocationId() == null || item.getLocation().get().getState() == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid item location"));
-            }
-        }
+        // if (item.getLocation().isPresent()) {
+        // if (item.getLocation().get().getLocationId() == null ||
+        // item.getLocation().get().getState() == null) {
+        // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
+        // ErrorMessage("invalid item location"));
+        // }
+        // }
 
         // check if itemId is already present in database
         // 409 - conflict
@@ -72,13 +82,14 @@ public class ItemResource {
 
         // check if locationId is already in dadtabase
         // 409 - Conflict
-        if (item.getLocation().isPresent()
-                && !itemService.validateLocationId(item.getLocation().get().getLocationId())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ErrorMessage(
-                            "location " + item.getLocation().get().getLocationId()
-                                    + " is already present in database"));
-        }
+        // if (item.getLocation().isPresent()
+        // && !itemService.validateLocationId(item.getLocation().get().getLocationId()))
+        // {
+        // return ResponseEntity.status(HttpStatus.CONFLICT)
+        // .body(new ErrorMessage(
+        // "location " + item.getLocation().get().getLocationId()
+        // + " is already present in database"));
+        // }
 
         // item is present and avalid
         // 200 - OK
