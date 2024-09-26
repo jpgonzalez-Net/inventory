@@ -3,7 +3,6 @@ package com.jp.inventory.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,21 +13,21 @@ import com.jp.inventory.repository.ItemRepo;
 public class ItemService {
 
     @Autowired
-    ItemRepo itemDao;
+    ItemRepo itemRepo;
 
     public List<Item> getAllItems() {
-        List<Item> items = itemDao.findAll();
+        List<Item> items = itemRepo.findAll();
         return items;
     }
 
     public Optional<Item> getItem(Integer itemId) {
-        return itemDao.findById(itemId);
+        return itemRepo.findById(itemId);
     }
 
     public void removeItem(Integer itemId) {
         Optional<Item> itemOptional = getItem(itemId);
         if (itemOptional.isPresent()) {
-            itemDao.deleteById(itemId);
+            itemRepo.deleteById(itemId);
         }
     }
 
@@ -43,16 +42,11 @@ public class ItemService {
         // }
         // }
 
-        itemDao.save(item);
+        itemRepo.save(item);
         return Optional.of(item);
     }
 
     public boolean validateId(Integer itemId) {
-        return !itemDao.existsById(itemId);
-    }
-
-    public boolean validateLocationId(Integer locationId) {
-        return true;
-        // return itemDao.validateLocationId(locationId);
+        return !itemRepo.existsById(itemId);
     }
 }

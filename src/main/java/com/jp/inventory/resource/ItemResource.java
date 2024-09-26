@@ -1,8 +1,10 @@
 package com.jp.inventory.resource;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +35,31 @@ public class ItemResource {
 
     // GET /items
     @GetMapping(produces = MediaType.APPLICATION_JSON)
-    public List<Item> fetchItems() {
-        // TODO: implement queries
-        return itemService.getAllItems();
+    public List<Item> fetchItems(@RequestParam(required = false) String itemName,
+            @RequestParam(required = false) String description) {
+
+        List<Item> items = itemService.getAllItems();
+        if (itemName != null) {
+            List<Item> filteredList = new ArrayList<>();
+            for (Item item : items) {
+                if (item.getItemName().equals(itemName)) {
+                    filteredList.add(item);
+                }
+            }
+            items = filteredList;
+        }
+
+        if (description != null) {
+            List<Item> filteredList = new ArrayList<>();
+            for (Item item : items) {
+                if (item.getDescription().equals(description)) {
+                    filteredList.add(item);
+                }
+            }
+            items = filteredList;
+        }
+
+        return items;
     }
 
     // GET /items/{itemId}
@@ -53,7 +77,7 @@ public class ItemResource {
     public ResponseEntity<?> insterNewItem(@RequestBody Item item) {
         // check if item is valid (id, name)
         // 400 - bad request
-        if (item.getItemName() == null) {
+        if (item.getItemId().equals(null) || item.getItemName().equals(null)) {
             // check if has location and the location is valid
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid item"));
         }

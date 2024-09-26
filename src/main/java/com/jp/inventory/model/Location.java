@@ -1,34 +1,55 @@
 package com.jp.inventory.model;
 
-import java.util.Optional;
+import java.util.List;
 
-public class Location {
-    private final Integer locationId; // unico, obligatorio
-    private final String state; // obligatorio
-    private final Optional<String> address;
-    private final Optional<Integer> phoneNumber;
+import org.springframework.stereotype.Component;
 
-    public Location(Integer locationId, String state, Optional<String> address, Optional<Integer> phoneNumber) {
-        this.locationId = locationId;
-        this.state = state;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Component
+@Entity
+@Data
+@AllArgsConstructor
+public class Location implements java.io.Serializable {
+
+    @Id
+    private Integer locationId; // unico, obligatorio
+    private String state; // obligatorio
+    private String address;
+    private Integer phoneNumber;
+
+    @OneToMany
+    private List<Item> item;
+
+    public Location() {
     }
 
-    public Integer getLocationId() {
-        return locationId;
-    }
+    // public Location(Integer locationId, String state, Optional<String> address,
+    // Optional<Integer> phoneNumber) {
+    // this.locationId = locationId;
+    // this.state = state;
+    // this.address = address;
+    // this.phoneNumber = phoneNumber;
+    // }
 
-    public String getState() {
-        return state;
-    }
+    // public Integer getLocationId() {
+    // return locationId;
+    // }
 
-    public Optional<String> getAddress() {
-        return address;
-    }
+    // public String getState() {
+    // return state;
+    // }
 
-    public Optional<Integer> getPhoneNumber() {
-        return phoneNumber;
-    }
+    // public Optional<String> getAddress() {
+    // return address;
+    // }
+
+    // public Optional<Integer> getPhoneNumber() {
+    // return phoneNumber;
+    // }
 
 }

@@ -1,14 +1,10 @@
 package com.jp.inventory.model;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,8 +17,10 @@ public class Item implements java.io.Serializable {
     @Id
     private Integer itemId; // unico, obligatorio
     private String itemName; // obligatorio
-    // private Optional<String> description;
-    // private Optional<Location> location;
+    private String description;
+
+    @ManyToOne
+    private Location location; // Location
 
     public Item() {
     }
