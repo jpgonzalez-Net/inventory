@@ -77,7 +77,7 @@ public class ItemResource {
     public ResponseEntity<?> insterNewItem(@RequestBody Item item) {
         // check if item is valid (id, name)
         // 400 - bad request
-        if (item.getItemId().equals(null) || item.getItemName().equals(null)) {
+        if (item.getItemId() == null || item.getItemName().equals(null)) {
             // check if has location and the location is valid
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid item"));
         }

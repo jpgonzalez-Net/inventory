@@ -15,6 +15,10 @@ public class LocationService {
     @Autowired
     LocationRepo locationRepo;
 
+    public LocationService(LocationRepo locationRepo) {
+        this.locationRepo = locationRepo;
+    }
+
     public List<Location> getAllLocations() {
         List<Location> locations = locationRepo.findAll();
         return locations;
@@ -24,16 +28,18 @@ public class LocationService {
         return locationRepo.findById(locationId);
     }
 
-    public void removeLocation(Integer locationId) {
+    public boolean removeLocation(Integer locationId) {
         Optional<Location> locationOptional = getLocation(locationId);
         if (locationOptional.isPresent()) {
             locationRepo.deleteById(locationId);
+            return true;
         }
+        return false;
     }
 
     public Optional<Location> insterLocation(Location location) {
         if (location.getLocationId() == null || location.getState() == null) {
-            return Optional.of(null);
+            return Optional.ofNullable(null);
         }
 
         locationRepo.save(location);

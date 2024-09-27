@@ -35,7 +35,7 @@ public class LocationResource {
 
         // check if location is valid (id, state)
         // 400 - BAD REQUEST
-        if (location.getLocationId().equals(null) || location.getState().equals(null)) {
+        if (location.getLocationId() == null || location.getState().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid item"));
         }
 

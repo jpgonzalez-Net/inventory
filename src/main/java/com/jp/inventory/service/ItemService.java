@@ -15,6 +15,10 @@ public class ItemService {
     @Autowired
     ItemRepo itemRepo;
 
+    public ItemService(ItemRepo itemRepo) {
+        this.itemRepo = itemRepo;
+    }
+
     public List<Item> getAllItems() {
         List<Item> items = itemRepo.findAll();
         return items;
@@ -24,16 +28,19 @@ public class ItemService {
         return itemRepo.findById(itemId);
     }
 
-    public void removeItem(Integer itemId) {
+    public boolean removeItem(Integer itemId) {
         Optional<Item> itemOptional = getItem(itemId);
         if (itemOptional.isPresent()) {
             itemRepo.deleteById(itemId);
+            return true;
         }
+        return false;
     }
 
     public Optional<Item> insertItem(Item item) {
+        System.out.println("hello");
         if (item.getItemId() == null || item.getItemName() == null || !this.validateId(item.getItemId())) {
-            return Optional.of(null);
+            return Optional.ofNullable(null);
         }
         // if (item.getLocation().isPresent()) {
         // if (item.getLocation().get().getLocationId() == null ||
@@ -42,6 +49,7 @@ public class ItemService {
         // }
         // }
 
+        System.out.println("here");
         itemRepo.save(item);
         return Optional.of(item);
     }

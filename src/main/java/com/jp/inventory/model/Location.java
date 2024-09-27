@@ -22,9 +22,6 @@ public class Location implements java.io.Serializable {
     private String address;
     private Integer phoneNumber;
 
-    @OneToMany
-    private List<Item> item;
-
     public Location() {
     }
 
