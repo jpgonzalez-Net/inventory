@@ -82,16 +82,6 @@ public class ItemResource {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid item"));
         }
 
-        // item is valid, check if has location and is valid
-        // 400 - bad request
-        // if (item.getLocation().isPresent()) {
-        // if (item.getLocation().get().getLocationId() == null ||
-        // item.getLocation().get().getState() == null) {
-        // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
-        // ErrorMessage("invalid item location"));
-        // }
-        // }
-
         // check if itemId is already present in database
         // 409 - conflict
         if (!itemService.validateId(item.getItemId())) {
@@ -99,23 +89,10 @@ public class ItemResource {
                     .body(new ErrorMessage("item " + item.getItemId() + " is already present in database"));
         }
 
-        // check if locationId is already in dadtabase
-        // 409 - Conflict
-        // if (item.getLocation().isPresent()
-        // &&
-        // !itemService.validateLocationId(item.getLocation().get().getLocationId()))
-        // {
-        // return ResponseEntity.status(HttpStatus.CONFLICT)
-        // .body(new ErrorMessage(
-        // "location " + item.getLocation().get().getLocationId()
-        // + " is already present in database"));
-        // }
-
         // item is present and avalid
         // 201 - OK
         Optional<Item> itemOptional = itemService.insertItem(item);
         if (itemOptional.isPresent()) {
-            // TODO: check that Location is valid
             return ResponseEntity.status(HttpStatus.CREATED).body(itemOptional.get());
         }
 

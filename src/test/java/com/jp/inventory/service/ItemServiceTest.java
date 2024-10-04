@@ -17,10 +17,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jp.inventory.model.Item;
 import com.jp.inventory.model.Location;
 import com.jp.inventory.repository.ItemRepo;
+import com.jp.inventory.repository.LocationRepo;
 
 public class ItemServiceTest {
 
@@ -28,12 +30,17 @@ public class ItemServiceTest {
     private ItemService itemService;
 
     @Mock
+    private LocationService locationService;
+    @Mock
     private ItemRepo fakeItemRepo;
+    @Mock
+    private LocationRepo fakeLocationRepo;
 
     @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
-        itemService = new ItemService(fakeItemRepo);
+        this.locationService = new LocationService(fakeLocationRepo);
+        itemService = new ItemService(fakeItemRepo, locationService);
     }
 
     @Test
@@ -73,8 +80,11 @@ public class ItemServiceTest {
     @Test
     void testInsertItem() {
         Item newItem = new Item(1, "baseball", "description", new Location(1, "TX", "44 Champions Lane", 811234));
+        Location newLocation = new Location(1, "TX", "44 Champions Lane", 811234);
 
         given(fakeItemRepo.save(newItem)).willReturn(newItem);
+        given(locationService.getLocation(anyInt())).willReturn(Optional.of(newLocation));
+        given(fakeItemRepo.findById(1)).willReturn(Optional.of(newItem));
         ArgumentCaptor<Item> captor = ArgumentCaptor.forClass(Item.class);
         Optional<Item> itemResult = itemService.insertItem(newItem);
         verify(fakeItemRepo).save(captor.capture());

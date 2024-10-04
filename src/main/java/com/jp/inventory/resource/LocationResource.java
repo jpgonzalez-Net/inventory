@@ -36,7 +36,7 @@ public class LocationResource {
         // check if location is valid (id, state)
         // 400 - BAD REQUEST
         if (location.getLocationId() == null || location.getState().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid item"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid location"));
         }
 
         // check if locationId is already present in database
@@ -54,7 +54,7 @@ public class LocationResource {
         }
 
         // item is not valid
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid item"));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("invalid location"));
     }
 
     @DeleteMapping(path = "{locationId}")
